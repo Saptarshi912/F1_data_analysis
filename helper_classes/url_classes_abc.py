@@ -78,12 +78,19 @@ class URLBase(ABC):
     
     @abstractmethod
     def get_data(self) -> APIResponse:
-        """
-        Fetch data from the URL
-        
-        Returns:
-            APIResponse: Response containing data and status message
-        """
+        pass
+
+
+class StaticURL(URLBase):
+    """Class for handling static URLs that don't change based on year or race"""
+    
+    def __init__(self, url: str):
+        if not url:
+            raise ValueError("URL cannot be empty for StaticURL")
+        super().__init__(url=url, year_dependent=False, race_dependent=False)
+    
+    def get_data(self) -> APIResponse:
+        """Implementation of abstract method from URLBase"""
         with httpx.Client() as client:
             try:
                 response = client.get(self.url)
@@ -101,16 +108,6 @@ class URLBase(ABC):
                     data=None,
                     resp_msg=f"Error: {str(e)}"
                 )
-
-
-class StaticURL(URLBase):
-    """Class for handling static URLs that don't change based on year or race"""
-    
-    def __init__(self, url: str):
-        if not url:
-            raise ValueError("URL cannot be empty for StaticURL")
-        super().__init__(url=url, year_dependent=False, race_dependent=False)
-
 
 class YearDependentURL(URLBase):
     """Class for handling URLs that depend on the year"""
@@ -134,6 +131,26 @@ class YearDependentURL(URLBase):
             current_year=current_year,
             **kwargs
         )
+    
+    def get_data(self) -> APIResponse:
+        """Implementation of abstract method from URLBase"""
+        with httpx.Client() as client:
+            try:
+                response = client.get(self.url)
+                if response.status_code == 200:
+                    return APIResponse(
+                        data=response.json(),
+                        resp_msg="Success"
+                    )
+                return APIResponse(
+                    data=None,
+                    resp_msg=f"Failed with status code: {response.status_code}"
+                )
+            except Exception as e:
+                return APIResponse(
+                    data=None,
+                    resp_msg=f"Error: {str(e)}"
+                )
         
     @classmethod
     def from_config(cls, config: Dict[str, Any]) -> 'YearDependentURL':
@@ -144,12 +161,13 @@ class YearDependentURL(URLBase):
 class RaceDependentURL(URLBase):
     """Class for handling URLs that depend on the race"""
     
-    def __init__(self, template_url: str, current_race: int, **kwargs):
+    def __init__(self, template_url: str, current_year: int,current_race: int, **kwargs):
         """
         Initialize a race-dependent URL
         
         Args:
             template_url: URL template containing {race_round} placeholder
+            current_year: The year to use in the URL
             current_race: The race number to use in the URL
             **kwargs: Additional arguments to pass to URLBase
         """
@@ -160,11 +178,50 @@ class RaceDependentURL(URLBase):
             template_url=template_url,
             year_dependent=True,
             race_dependent=True,
+            current_year=current_year,
             current_race=current_race,
             **kwargs
         )
+    
+    def get_data(self) -> APIResponse:
+        """Implementation of abstract method from URLBase"""
+        with httpx.Client() as client:
+            try:
+                response = client.get(self.url)
+                if response.status_code == 200:
+                    return APIResponse(
+                        data=response.json(),
+                        resp_msg="Success"
+                    )
+                return APIResponse(
+                    data=None,
+                    resp_msg=f"Failed with status code: {response.status_code}"
+                )
+            except Exception as e:
+                return APIResponse(
+                    data=None,
+                    resp_msg=f"Error: {str(e)}"
+                )
         
     @classmethod
     def from_config(cls, config: Dict[str, Any]) -> 'RaceDependentURL':
         """Create a RaceDependentURL from a configuration dictionary"""
         return cls(**config)
+
+## STATIC URLS ###
+class F1_status_url(StaticURL):
+    """Class for handling static URLs that don't change based on year or race"""
+    def __init__(self,url):
+        super().__init__(url)
+
+class F1_season_url(StaticURL):
+    """Class for handling static URLs that don't change based on year or race"""
+    def __init__(self,url):
+        super().__init__(url)
+
+class F1_circuit_url(StaticURL):
+    """Class for handling static URLs that don't change based on year or race"""
+    def __init__(self,url):
+        super().__init__(url)
+
+## YEAR DEPENDENT URLS ###

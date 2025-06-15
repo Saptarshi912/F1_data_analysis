@@ -1,0 +1,146 @@
+api_config:
+  base_url: "https://api.jolpi.ca/ergast/f1"
+  current_year: 2025
+
+# Static endpoints - do not contain year variables
+static_endpoints:
+  season:
+    url: "https://api.jolpi.ca/ergast/f1/seasons"
+    description: "Get all F1 seasons data"
+    year_dependent: false
+    
+  circuit:
+    url: "https://api.jolpi.ca/ergast/f1/circuits"
+    description: "Get all F1 circuits data"
+    year_dependent: false
+    
+  status:
+    url: "https://api.jolpi.ca/ergast/f1/status"
+    description: "Get F1 status codes and descriptions"
+    year_dependent: false
+
+# Year-dependent endpoints - contain year as part of the URL path
+year_dependent_endpoints:
+  race:
+    url: "https://api.jolpi.ca/ergast/f1/2025/races"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/races"
+    description: "Get race schedule for specific year"
+    year_dependent: true
+    current_year: 2025
+    
+  constructor:
+    url: "https://api.jolpi.ca/ergast/f1/2025/constructors"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/constructors"
+    description: "Get constructors participating in specific year"
+    year_dependent: true
+    current_year: 2025
+    
+  driver:
+    url: "https://api.jolpi.ca/ergast/f1/2025/drivers"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/drivers"
+    description: "Get drivers participating in specific year"
+    year_dependent: true
+    current_year: 2025
+    
+  result:
+    url: "https://api.jolpi.ca/ergast/f1/2025/results"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/results"
+    description: "Get race results for specific year"
+    year_dependent: true
+    current_year: 2025
+    
+  sprint:
+    url: "https://api.jolpi.ca/ergast/f1/2025/sprint"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/sprint"
+    description: "Get sprint race data for specific year"
+    year_dependent: true
+    current_year: 2025
+    
+  qualifying:
+    url: "https://api.jolpi.ca/ergast/f1/2025/qualifying"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/qualifying"
+    description: "Get qualifying results for specific year"
+    year_dependent: true
+    current_year: 2025
+    
+  driverstanding:
+    url: "https://api.jolpi.ca/ergast/f1/2025/driverstandings"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/driverstandings"
+    description: "Get driver championship standings for specific year"
+    year_dependent: true
+    current_year: 2025
+    
+  constructorstanding:
+    url: "https://api.jolpi.ca/ergast/f1/2025/constructorstandings"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/constructorstandings"
+    description: "Get constructor championship standings for specific year"
+    year_dependent: true
+    current_year: 2025
+
+# Race-specific endpoints - contain both year and race number variables
+race_specific_endpoints:
+  pitstop:
+    url: "https://api.jolpi.ca/ergast/f1/2025/1/pitstops"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/{race_round}/pitstops"
+    description: "Get pitstop data for specific race"
+    year_dependent: true
+    race_dependent: true
+    current_year: 2025
+    current_race: 1
+    
+  lap:
+    url: "https://api.jolpi.ca/ergast/f1/2025/1/laps"
+    template_url: "https://api.jolpi.ca/ergast/f1/{year}/{race_round}/laps"
+    description: "Get lap timing data for specific race"
+    year_dependent: true
+    race_dependent: true
+    current_year: 2025
+    current_race: 1
+
+# Summary of endpoint categories
+endpoint_summary:
+  total_endpoints: 12
+  static_endpoints: 3
+  year_dependent_endpoints: 8
+  race_specific_endpoints: 2
+  
+  # List of endpoints that use year as variable
+  endpoints_with_year_variable:
+    - race
+    - constructor
+    - driver
+    - result
+    - sprint
+    - qualifying
+    - pitstop
+    - lap
+    - driverstanding
+    - constructorstanding
+    
+  # List of endpoints that are static (no year variable)
+  static_endpoint_list:
+    - season
+    - circuit
+    - status
+    
+  # List of endpoints that require both year and race round
+  race_specific_endpoint_list:
+    - pitstop
+    - lap
+
+# URL patterns for dynamic generation
+url_patterns:
+  static_pattern: "https://api.jolpi.ca/ergast/f1/{endpoint}"
+  year_pattern: "https://api.jolpi.ca/ergast/f1/{year}/{endpoint}"
+  race_pattern: "https://api.jolpi.ca/ergast/f1/{year}/{race_round}/{endpoint}"
+
+# Default values for dynamic URL generation
+defaults:
+  year: 2025
+  race_round: 1
+  
+# Available years (example range - can be extended)
+available_years:
+  start_year: 1950
+  end_year: 2025
+  current_season: 2025

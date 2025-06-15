@@ -12,11 +12,7 @@ class URLBase(ABC):
         else:
             self.url = url
     
-    @abstractmethod  
-    def update_url(self, current_race=0,current_year=0):
-        pass
-
-   
+    @abstractmethod
     def get_data(self):
         with httpx.Client() as client:
             resp_msg=""
@@ -28,3 +24,4 @@ class URLBase(ABC):
                 data = None
                 resp_msg="Failed"
             return {"data":data,"resp_msg":resp_msg}
+

@@ -112,7 +112,7 @@ class StaticURL(URLBase):
 class YearDependentURL(URLBase):
     """Class for handling URLs that depend on the year"""
     
-    def __init__(self, template_url: str, current_year: int, **kwargs):
+    def __init__(self, template_url: str, current_year: int,year_dependent: bool = True, **kwargs):
         """
         Initialize a year-dependent URL
         
@@ -126,7 +126,7 @@ class YearDependentURL(URLBase):
             
         super().__init__(
             template_url=template_url,
-            year_dependent=True,
+            year_dependent=year_dependent,
             race_dependent=False,
             current_year=current_year,
             **kwargs

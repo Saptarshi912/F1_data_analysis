@@ -41,7 +41,9 @@ def extract_endpoints(folder,filename):
     
     year_dependent_endpoints = config_data.get('year_dependent_endpoints', {})
     
-    return static_endpoints, year_dependent_endpoints
+    race_dependent_endpoints = config_data.get('race_specific_endpoints', {})
+    
+    return [static_endpoints, year_dependent_endpoints, race_dependent_endpoints]
 
 
 def normalise_url_schema(conf_dict:dict) -> list:
@@ -60,8 +62,11 @@ def normalise_url_schema(conf_dict:dict) -> list:
     return return_list
 
 def main():
-    static_endpoints, year_dependent_endpoints = extract_endpoints('config','race_config.yaml')
-    final_list = normalise_url_schema(static_endpoints) + normalise_url_schema(year_dependent_endpoints)
+    endpoints = extract_endpoints('config','race_config.yaml')
+    final_list = []
+    for endpoint in endpoints:
+        intermediate_list = normalise_url_schema(endpoint)
+        final_list.extend(intermediate_list)
     return final_list
     
 if __name__ == "__main__":

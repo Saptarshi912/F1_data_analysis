@@ -224,4 +224,60 @@ class F1_circuit_url(StaticURL):
     def __init__(self,url):
         super().__init__(url)
 
-## YEAR DEPENDENT URLS ###
+################### YEAR DEPENDENT URL ###################
+class F1_race_url(YearDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,year_dependent,current_year):
+        super().__init__(template_url,year_dependent,current_year)
+
+class F1_constructor_url(YearDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,year_dependent,current_year):
+        super().__init__(template_url,year_dependent,current_year)
+
+class F1_driver_url(YearDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,year_dependent,current_year):
+        super().__init__(template_url,year_dependent,current_year)
+
+class F1_result_url(YearDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,year_dependent,current_year):
+        super().__init__(template_url,year_dependent,current_year)  
+
+class F1_sprint_url(YearDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,year_dependent,current_year):
+        super().__init__(template_url,year_dependent,current_year)
+
+class F1_qualify_url(YearDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,year_dependent,current_year):
+        super().__init__(template_url,year_dependent,current_year)
+
+class F1_standings_url(YearDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,year_dependent,current_year):
+        super().__init__(template_url,year_dependent,current_year)
+
+class F1_constructorstanding_url(YearDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,year_dependent,current_year):
+        super().__init__(template_url,year_dependent,current_year)
+
+class F1_driverstanding_url(YearDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,year_dependent,current_year):
+        super().__init__(template_url,year_dependent,current_year)
+
+################### RACE DEPENDENT URL ##################
+
+class F1_pitstop_url(RaceDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,race_dependent,current_year,current_race):
+        super().__init__(template_url,race_dependent,current_year,current_race)
+
+class F1_lap_url(RaceDependentURL):
+    """Class for handling URLs that depend on the year"""
+    def __init__(self,template_url,race_dependent,current_year,current_race):
+        super().__init__(template_url,race_dependent,current_year,current_race)

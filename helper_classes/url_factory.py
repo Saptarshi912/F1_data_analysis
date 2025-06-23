@@ -57,7 +57,7 @@ class URLFactory:
             if name in cls.YEAR_DEPENDENT_ENDPOINTS and endpoint_config.get('year_dependent'):
                 handlers[name] = cls.YEAR_DEPENDENT_ENDPOINTS[name](
                     template_url=endpoint_config['template_url'],
-                    year_dependent=True,
+                    year_dependent=endpoint_config.get('year_dependent', True),
                     current_year=endpoint_config.get('current_year', 2023)
                 )
         
